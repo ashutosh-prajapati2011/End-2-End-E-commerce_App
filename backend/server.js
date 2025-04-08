@@ -3,7 +3,7 @@ const app = express();
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
-const productRoutes = require('./routes/products');
+const productRoutes = require('./routes/product');
 const cartRoutes = require('./routes/cart');
 
 app.use(express.json());
