@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   backend:
     build:
@@ -11,6 +12,8 @@ services:
       - DB_PASSWORD=root
       - DB_NAME=ecommerce
       - JWT_SECRET=mysecurejwt
+    volumes:
+      - ./backend:/app  # Mount backend source code for live updates (dev only)
     depends_on:
       - mysql
 
@@ -19,6 +22,8 @@ services:
       context: ./frontend
     ports:
       - "3000:80"
+    volumes:
+      - ./frontend:/app  # Mount frontend files (optional for dev)
     depends_on:
       - backend
 
@@ -29,4 +34,9 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ecommerce
     ports:
-      - "3307:3306"
+      - "3307:3306"  # Expose MySQL if you want to access from host (phpMyAdmin, Workbench, etc.)
+    volumes:
+      - mysql-data:/var/lib/mysql  # Persistent volume for DB data
+
+volumes:
+  mysql-data:
